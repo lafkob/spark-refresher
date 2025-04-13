@@ -1,6 +1,6 @@
 # 🔥 Next-Level PySpark Project: Advanced Analysis of NYC Taxi Data
 
-Goal: Use Spark to explore, transform, and analyze real-world data while focusing on individual core Spark concepts, each in its own section.
+Goal: Use Spark to explore, transform, and analyze real-world data while focusing on individual core Spark concepts.
 
 ---
 
