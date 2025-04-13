@@ -11,7 +11,7 @@ Your environment remains containerized via Docker and runs locally using Jupyter
 
 ---
 
-## 🧱 Project Setup (Optional Recap)
+## ✅ Environment Recap
 
 You're still using:
 

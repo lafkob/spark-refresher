@@ -36,11 +36,9 @@ curl -O https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2014-08.
 Source: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page (Year: 2014)
 Note: This used to be available in CSV but NYC up-converted everything into parquet
 
-## 📓 Create Notebook
+## 📘 Spark Notebook: Core Concepts
 
 Inside the Jupyter UI, create a new notebook and paste the following code:
-
-### 📘 Spark Notebook: Core Concepts
 
 ```python
 from pyspark.sql import SparkSession
