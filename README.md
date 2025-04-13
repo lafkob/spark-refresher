@@ -5,3 +5,5 @@ It's been a few years since I've regularly used Spark, and even back then it was
 You should have some experience with Spark as the exercises are more refresher than introduction.
 
 Docker is used to run a container that already has Spark, Python, Jupyter, and useful packages pre-installed. The exercises are run through the Jupyter interface hosted by the container.
+
+![image](https://github.com/user-attachments/assets/d229fd43-d3e9-40f7-b896-818d3a8cd6dc)
