@@ -64,6 +64,22 @@ df_grouped = df_filtered.groupBy("passenger_count").count()
 # Show results
 df_grouped.show()
 
+# Calculate some distributions for trip distance
+from pyspark.sql.functions import when, lit, col
+
+df_ranges = df.withColumn("trip_range",
+                         when((col("trip_distance") <= 5), lit("<5")).otherwise(
+                         when((col("trip_distance") > 5) & (col("trip_distance") <= 25), lit("5-25")).otherwise(
+                         when((col("trip_distance") > 25) & (col("trip_distance") <= 50), lit("26-50")).otherwise(
+                         when((col("trip_distance") > 50) & (col("trip_distance") <= 100), lit("51-100")).otherwise(
+                         when((col("trip_distance") > 100) & (col("trip_distance") <= 250), lit("101-250")).otherwise(
+                         when((col("trip_distance") > 250) & (col("trip_distance") <= 500), lit("251-500")).otherwise(
+                         when((col("trip_distance") > 500) & (col("trip_distance") <= 1000), lit("501-1000")).otherwise(
+                         when((col("trip_distance") > 1000) & (col("trip_distance") <= 5000), lit("1001-5000")).otherwise(
+                         when((col("trip_distance") > 5000) & (col("trip_distance") <= 10000), lit("5001-10000"))
+                         .otherwise(lit("other")))))))))))
+df_ranges.groupBy("trip_range").count().show()
+
 # Use SQL on the DataFrame
 df.createOrReplaceTempView("trips")
 spark.sql("""
