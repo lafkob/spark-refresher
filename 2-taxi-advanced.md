@@ -104,6 +104,7 @@ Use SQL to do expressive, familiar queries.
 ### 🧪 Code:
 
 ```python
+import pyspark.sql.functions as f
 print("Using DataFrame API:")
 df.where(df.trip_distance > 1) \
 .groupBy(df.passenger_count) \
@@ -164,8 +165,8 @@ df.cache()  # Keeps data in memory across actions
 df.count()  # Triggers computation and caching
 
 # Try running multiple actions
-df.select("trip_distance").avg().show()
-df.select("trip_distance").max().show()
+df.select(f.avg("trip_distance")).show()
+df.select(f.max("trip_distance")).show()
 ```
 
 ### 💡 Note:
