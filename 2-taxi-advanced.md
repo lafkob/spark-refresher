@@ -104,6 +104,24 @@ Use SQL to do expressive, familiar queries.
 ### 🧪 Code:
 
 ```python
+print("Using DataFrame API:")
+df.where(df.trip_distance > 1) \
+.groupBy(df.passenger_count) \
+.agg(f.round(f.avg("trip_distance"), 2).alias("avg_distance")) \
+.sort(asc("passenger_count")) \
+.show()
+
+print("Using SparkSQL:")
+df.createOrReplaceTempView("taxi")
+spark.sql("""
+SELECT passenger_count, ROUND(AVG(trip_distance), 2) as avg_distance
+FROM taxi
+WHERE trip_distance > 1
+GROUP BY passenger_count
+ORDER BY passenger_count
+""").show()
+
+
 # Register as temp view
 df.createOrReplaceTempView("taxi")
 
@@ -117,9 +135,21 @@ ORDER BY passenger_count
 """).show()
 ```
 
-### 💡 Note:
+### 💡 Notes:
 
-Spark SQL leverages Catalyst optimizer and is often more readable than DataFrame chaining.
+✅ The DataFrame API:
+
+- aka Domain-Specific Language or Functional API
+- Type-safe (to some extent — less prone to SQL typos).
+- More programmatic and dynamic (e.g., easier to construct pipelines).
+- Often easier to debug with IDE autocompletion.
+
+✅ The Spark SQL API (or Spark SQL interface):
+
+- Leverages the Catalyst query optimizer
+- More familiar to users with SQL backgrounds.
+- Great for ad-hoc querying and notebooks.
+- Useful when interacting with BI tools like Tableau or when running on Databricks.
 
 ## 🧠 SECTION 5: Caching and Persistence
 
