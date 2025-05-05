@@ -156,16 +156,16 @@ df.write.format("delta").mode("overwrite").save("delta/trips")
 
 # Read it back
 delta_df = spark.read.format("delta").load("delta/trips")
-delta_df.printSchema()
+delta_df.select("tpep_pickup_datetime").show(1)
 
 # Overwrite the table with the following month's data
 df = spark.read.parquet("yellow_tripdata_2014-09.parquet")
 # overwriteSchema avoids typing issues (08 vs 09 has int vs double column types)
 df.write.format("delta").mode("overwrite").option("overwriteSchema", "true").save("delta/trips")
 
-# Query version history (time travel), notice the sample date
+# Query current and last version history (time travel), notice the sample date
 spark.read.format("delta").option("versionAsOf", 0).load("delta/trips").select("tpep_pickup_datetime").show(1)
-spark.read.format("delta").option("versionAsOf", 1).load("delta/trips").select("tpep_pickup_datetime").show(1)
+spark.read.format("delta").load("delta/trips").select("tpep_pickup_datetime").show(1)
 ```
 
 ✅ Explanation: Delta Lake adds powerful transactional and schema evolution capabilities to Spark tables, critical for production-grade pipelines.
