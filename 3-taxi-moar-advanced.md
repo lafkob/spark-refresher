@@ -178,7 +178,7 @@ Break your logic into functions and stages for maintainable, testable pipelines.
 
 ```python
 def extract(path):
-    return df = spark.read.parquet(path)
+    return spark.read.parquet(path)
 
 def transform(df):
     return df.withColumn("fare_per_mile", df.total_amount / df.trip_distance)
