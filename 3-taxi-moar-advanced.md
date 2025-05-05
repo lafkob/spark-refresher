@@ -31,6 +31,8 @@ docker-compose up
 
 ## 🔁 SECTION 1: Structured Streaming with PySpark
 
+NOTE: WIP
+
 ### 🎯 Objective:
 
 Ingest and process data in real time from a directory using Structured Streaming.
