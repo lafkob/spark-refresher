@@ -109,7 +109,7 @@ print("Using DataFrame API:")
 df.where(df.trip_distance > 1) \
 .groupBy(df.passenger_count) \
 .agg(f.round(f.avg("trip_distance"), 2).alias("avg_distance")) \
-.sort(asc("passenger_count")) \
+.sort(f.asc("passenger_count")) \
 .show()
 
 print("Using SparkSQL:")
