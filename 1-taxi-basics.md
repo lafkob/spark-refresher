@@ -26,11 +26,12 @@ docker-compose up
 
 ## 📊 Dataset
 
-Download a sample of NYC Yellow Taxi data:
+Download samples of NYC Yellow Taxi data:
 
 ```bash
 cd work
 curl -O https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2014-08.parquet
+curl -O https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2014-09.parquet
 ```
 
 Source: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page (Year: 2014)
