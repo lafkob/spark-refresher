@@ -132,17 +132,40 @@ predictions.select("label", "prediction", "probability").show(5)
 
 Use Delta Lake to store data with ACID guarantees, schema enforcement, and time travel.
 
-> ⚠️ You'll need the Delta Lake JAR in a custom Spark image — OR use Databricks if preferred. For now, we'll demonstrate syntax (commented).
+```python
+pip install delta-spark
+```
+
+> ⚠️ You should restart the python kernel for your notebook at this point. Continue with the following in a new cell(s).
 
 ```python
-# Example: Delta table write (requires Delta support in Spark)
-# df.write.format("delta").mode("overwrite").save("/tmp/delta/trips")
+from delta import configure_spark_with_delta_pip
+from pyspark.sql import SparkSession
+
+builder = SparkSession.builder \
+    .appName("DeltaLakeExample") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+
+spark = configure_spark_with_delta_pip(builder).getOrCreate()
+
+df = spark.read.parquet("yellow_tripdata_2014-08.parquet")
+
+# Write to a delta table
+df.write.format("delta").mode("overwrite").save("delta/trips")
 
 # Read it back
-# delta_df = spark.read.format("delta").load("/tmp/delta/trips")
+delta_df = spark.read.format("delta").load("delta/trips")
+delta_df.printSchema()
 
-# Query version history (time travel)
-# spark.read.format("delta").option("versionAsOf", 0).load("/tmp/delta/trips").show()
+# Overwrite the table with the following month's data
+df = spark.read.parquet("yellow_tripdata_2014-09.parquet")
+# overwriteSchema avoids typing issues (08 vs 09 has int vs double column types)
+df.write.format("delta").mode("overwrite").option("overwriteSchema", "true").save("delta/trips")
+
+# Query version history (time travel), notice the sample date
+spark.read.format("delta").option("versionAsOf", 0).load("delta/trips").select("tpep_pickup_datetime").show(1)
+spark.read.format("delta").option("versionAsOf", 1).load("delta/trips").select("tpep_pickup_datetime").show(1)
 ```
 
 ✅ Explanation: Delta Lake adds powerful transactional and schema evolution capabilities to Spark tables, critical for production-grade pipelines.
