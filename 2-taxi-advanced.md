@@ -121,19 +121,6 @@ WHERE trip_distance > 1
 GROUP BY passenger_count
 ORDER BY passenger_count
 """).show()
-
-
-# Register as temp view
-df.createOrReplaceTempView("taxi")
-
-# SQL query
-spark.sql("""
-SELECT passenger_count, ROUND(AVG(trip_distance), 2) AS avg_distance
-FROM taxi
-WHERE trip_distance > 1
-GROUP BY passenger_count
-ORDER BY passenger_count
-""").show()
 ```
 
 ### 💡 Notes:
